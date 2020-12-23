@@ -31,6 +31,7 @@ class MessagesScreenController extends MomentumController<MessagesScreenModel> {
     await _reload(key: key);
     subscribe(key);
     model.update(isLoading: false);
+    ChatHead().addChat(model.conversation);
   }
 
   @override

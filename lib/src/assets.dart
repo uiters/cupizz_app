@@ -28,4 +28,5 @@ class _Icon {
 
 class _Image {
   final String defaultAvatar = _IMAGE_PATH + 'default_avatar.png';
+  final String logo = _IMAGE_PATH + 'logo.png';
 }
