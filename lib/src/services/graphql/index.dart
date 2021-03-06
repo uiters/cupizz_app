@@ -2,13 +2,14 @@ library graphql;
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io' as io;
 
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import '../../base/base.dart';
-import 'dart:io' as io;
 import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
+
+import '../../base/base.dart';
 
 part 'graphql_mutation.dart';
 part 'graphql_query.dart';

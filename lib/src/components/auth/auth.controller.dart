@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cupizz_app/src/base/base.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -13,7 +15,11 @@ class AuthController extends MomentumController<AuthModel> {
 
   @override
   Future<void> bootstrapAsync() async {
-    await Get.find<OneSignalService>().init();
+    try {
+      await Get.find<OneSignalService>().init();
+    } catch (e) {
+      log(e.toString(), name: 'Error');
+    }
     if (await isAuthenticated) {
       unawaited(gotoHome());
       await dependOn<LocationController>()

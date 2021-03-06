@@ -1,5 +1,6 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:cupizz_app/src/base/base.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_beautiful_popup/main.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -16,36 +17,49 @@ class LocationController extends MomentumController<LocationModel> {
 
   Future<bool> checkPermission(BuildContext? context,
       {bool showDialog = true}) async {
-    final checkPermission = await Geolocator.checkPermission();
-    if (checkPermission == LocationPermission.denied ||
-        checkPermission == LocationPermission.deniedForever) {
-      if (showDialog) {
-        await Future.delayed(Duration(seconds: 1));
-        await _showDialog(context!);
+    if (!kIsWeb) {
+      final checkPermission = await Geolocator.checkPermission();
+      if (checkPermission == LocationPermission.denied ||
+          checkPermission == LocationPermission.deniedForever) {
+        if (showDialog) {
+          await Future.delayed(Duration(seconds: 1));
+          await _showDialog(context!);
+        }
+        final permission = await Permission.location.request();
+        if (permission == PermissionStatus.restricted ||
+            permission == PermissionStatus.denied) {
+          await _showFailDialog(context!);
+          return false;
+        } else if (permission == PermissionStatus.permanentlyDenied) {
+          await _showOpenSettingDialog(context!);
+          return false;
+        }
       }
-      final permission = await Permission.location.request();
-      if (permission == PermissionStatus.restricted ||
-          permission == PermissionStatus.denied) {
-        await _showFailDialog(context!);
-        return false;
-      } else if (permission == PermissionStatus.permanentlyDenied) {
-        await _showOpenSettingDialog(context!);
-        return false;
-      }
+      await _updateLocation();
+      return true;
     }
-    await _updateLocation();
-    return true;
+    return false;
   }
 
   Future _updateLocation() async {
     await trycatch(() async {
-      final position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.best);
-      final service = Get.find<UserService>();
-      await service.updateProfile(
-        latitude: position.latitude,
-        longitude: position.longitude,
-      );
+      if (kIsWeb) {
+        // getCurrentPositionWeb(allowInterop((position) {
+        //   final service = Get.find<UserService>();
+        //   service.updateProfile(
+        //     latitude: position.coords.latitude,
+        //     longitude: position.coords.longitude,
+        //   );
+        // }));
+      } else {
+        final position = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.best);
+        final service = Get.find<UserService>();
+        await service.updateProfile(
+          latitude: position.latitude,
+          longitude: position.longitude,
+        );
+      }
     });
   }
 

@@ -5,10 +5,10 @@ export 'graphql/index.dart';
 export 'graphql_service.dart';
 export 'message_service.dart';
 export 'one_signal_service.dart';
+export 'post_service.dart';
 export 'storage_service.dart';
 export 'system_service.dart';
 export 'user_service.dart';
-export 'post_service.dart';
 
 Future initServices([bool isTesting = false]) async {
   await Get.putAsync(() => StorageService().init());
@@ -20,9 +20,7 @@ Future initServices([bool isTesting = false]) async {
       ).reset());
   Get.put(AuthService());
   Get.put(MessageService());
-  if (!isTesting) {
-    Get.put(OneSignalService());
-  }
+  Get.put(OneSignalService());
   Get.put(SystemService());
   Get.put(UserService());
   Get.put(PostService());

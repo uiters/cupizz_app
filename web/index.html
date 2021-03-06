@@ -16,19 +16,45 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="description" content="Các bằng hữu độc thân vui vẻ, xin có mấy lời gửi tới các bạn: Nếu bạn đang tìm kiếm người
+      yêu, muốn bắt đầu hẹn hò, hay chỉ đơn giản là muốn có thêm bạn bè, bạn cần có mặt trên
+      Cupizz.">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="cupizz_app">
   <meta name="google-signin-client_id" content="738777472803-6mm6aji488u3t2l95rrvts57miaitovo.apps.googleusercontent.com">
+  <meta name="apple-mobile-web-app-title" content="Cupizz | Giao lưu, kết bạn, hẹn hò và hơn thế nữa!">
+  <meta property="og:title" content="Cupizz | Giao lưu, kết bạn, hẹn hò và hơn thế nữa!">
+  <meta property="og:description" content="Các bằng hữu độc thân vui vẻ, xin có mấy lời gửi tới các bạn: Nếu bạn đang tìm kiếm người
+      yêu, muốn bắt đầu hẹn hò, hay chỉ đơn giản là muốn có thêm bạn bè, bạn cần có mặt trên
+      Cupizz.">
+  <meta property="og:image" content="assets/image/feature.png">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png" />
 
-  <title>cupizz_app</title>
+  <meta property="og:title" content="Cupizz | Giao lưu, kết bạn, hẹn hò và hơn thế nữa!">
+  <meta property="og:description" content="Các bằng hữu độc thân vui vẻ, xin có mấy lời gửi tới các bạn: Nếu bạn đang tìm kiếm người yêu, muốn bắt đầu hẹn hò, hay chỉ đơn giản là muốn có thêm bạn bè, bạn cần có mặt trên Cupizz.">
   <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+  <script>
+    window.OneSignal = window.OneSignal || [];
+    OneSignal.push(function () {
+      OneSignal.init({
+        appId: "3adf348e-2781-4d56-8003-f0813dee3bfe",
+        notifyButton: {
+          enable: true,
+        },
+      });
+    });
+    window.customOneSignalSetExternalUserId = (id) => {
+      OneSignal.push(function () {
+        OneSignal.setExternalUserId(id);
+      });
+    }
+  </script>
 </head>
 
 <body>

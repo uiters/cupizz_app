@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:cupizz_app/src/base/base.dart';
+import 'package:flutter/foundation.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:pedantic/pedantic.dart';
+import 'dart:js' as js;
 
 class OneSignalService extends GetxService {
   bool _isInited = false;
@@ -92,15 +94,24 @@ class OneSignalService extends GetxService {
     if (!_isInited) {
       await init();
     }
-    await OneSignal.shared.setSubscription(true);
-    unawaited(OneSignal.shared.setExternalUserId(userId).then((_) =>
-        log('Sent tags userId: $userId to OneSignal.', name: 'Onesignal')));
+    if (!kIsWeb) {
+      await OneSignal.shared.setSubscription(true);
+      unawaited(OneSignal.shared.setExternalUserId(userId).then((_) =>
+          log('Sent tags userId: $userId to OneSignal.', name: 'Onesignal')));
+    } else {
+      print('subscribe onesignal on web');
+      js.context.callMethod('customOneSignalSetExternalUserId', [userId]);
+    }
   }
 
   Future<void> unSubscribe() async {
     if (!_isInited) {
       await init();
     }
-    await OneSignal.shared.setExternalUserId('logged out');
+    if (!kIsWeb) {
+      await OneSignal.shared.setExternalUserId(null);
+    } else {
+      js.context.callMethod('customOneSignalSetExternalUserId', [null]);
+    }
   }
 }

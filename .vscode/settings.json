@@ -5,6 +5,7 @@
         "giffy",
         "mockito",
         "sidemenu",
+        "websafe",
         "xlider"
     ],
     "files.watcherExclude": {

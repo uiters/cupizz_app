@@ -41,10 +41,10 @@ class PrimaryScaffold extends StatelessWidget {
     ));
     return Stack(
       children: [
-        if (context.height > context.width && kIsWeb)
+        if (context.height <= context.width && kIsWeb)
           Center(
             child: SizedBox(
-              width: context.height * 9 / 19.5,
+              width: context.height * 9 / 16,
               child: scaffold,
             ),
           )

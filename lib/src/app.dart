@@ -10,6 +10,7 @@ import 'package:cupizz_app/src/screens/main/pages/post/components/post_page.cont
 import 'package:cupizz_app/src/screens/select_question/select_question_screen.dart';
 // import 'package:firebase_analytics/firebase_analytics.dart';
 // import 'package:firebase_analytics/observer.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Router;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
@@ -138,7 +139,8 @@ class _MyApp extends StatelessWidget {
             title: 'Cupizz',
             navigatorKey: isTesting ? null : AppConfig.navigatorKey,
             navigatorObservers: [
-              // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
+              // // if (!kIsWeb)
+              //   FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
             ],
             enableLog: false,
             popGesture: true,

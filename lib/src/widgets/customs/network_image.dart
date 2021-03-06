@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cupizz_app/src/base/base.dart';
+import 'package:flutter/foundation.dart';
 
 class CustomNetworkImage extends StatelessWidget {
   final String? url;
@@ -23,24 +24,29 @@ class CustomNetworkImage extends StatelessWidget {
           : borderRadius ?? BorderRadius.circular(0),
       child: url == ''
           ? Image.asset(Assets.images.defaultAvatar, fit: fit)
-          : CachedNetworkImage(
-              imageUrl: url ?? '',
-              fit: fit,
-              errorWidget: (context, url, error) {
-                if (isAvatar) {
-                  return Image.asset(Assets.images.defaultAvatar, fit: fit);
-                }
-                return Container(
-                  color: context.colorScheme.surface,
-                );
-              },
-              progressIndicatorBuilder: (ctx, url, process) {
-                return Skeleton(
-                    child: Container(
-                  color: context.colorScheme.background,
-                ));
-              },
-            ),
+          : kIsWeb
+              ? Image.network(
+                  url ?? '',
+                  fit: fit,
+                )
+              : CachedNetworkImage(
+                  imageUrl: url ?? '',
+                  fit: fit,
+                  errorWidget: (context, url, error) {
+                    if (isAvatar) {
+                      return Image.asset(Assets.images.defaultAvatar, fit: fit);
+                    }
+                    return Container(
+                      color: context.colorScheme.surface,
+                    );
+                  },
+                  progressIndicatorBuilder: (ctx, url, process) {
+                    return Skeleton(
+                        child: Container(
+                      color: context.colorScheme.background,
+                    ));
+                  },
+                ),
     );
   }
 }

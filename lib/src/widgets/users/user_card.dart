@@ -4,41 +4,30 @@ class UserCard extends StatelessWidget {
   final Function? onPressed;
   final SimpleUser simpleUser;
   final bool showHobbies;
+  final double radius;
 
   const UserCard({
     Key? key,
     this.onPressed,
     required this.simpleUser,
     this.showHobbies = true,
+    this.radius = 15,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onPressed as void Function()?,
+      borderRadius: BorderRadius.circular(radius),
       child: Stack(
         children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-              ),
-              color: context.colorScheme.background,
-            ),
-            padding: const EdgeInsets.all(20),
-            child: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: context.colorScheme.background,
-              ),
-            ),
-          ),
           Positioned.fill(
               child: Hero(
             tag: simpleUser.cover?.id ?? '',
             child: CustomNetworkImage(
-                simpleUser.cover?.url ?? simpleUser.avatar?.url ?? ''),
+              simpleUser.cover?.url ?? simpleUser.avatar?.url ?? '',
+              borderRadius: BorderRadius.circular(radius),
+            ),
           )),
           Positioned(
             bottom: 0,
@@ -117,7 +106,12 @@ class UserCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (showHobbies) ..._buildHobbyList(context)
+                if (showHobbies) ...[
+                  Divider(color: Colors.grey[300]),
+                  _HobbyList(
+                    data: simpleUser.getSameHobbies(context) ?? [],
+                  )
+                ]
               ],
             ),
           )
@@ -125,37 +119,36 @@ class UserCard extends StatelessWidget {
       ),
     );
   }
+}
 
-  List<Widget> _buildHobbyList(BuildContext context) {
-    var hobbiesToShow = simpleUser.getSameHobbies(context) ?? [];
+class _HobbyList extends StatelessWidget {
+  final List<HobbyWithIsSelect> data;
+  const _HobbyList({Key? key, this.data = const []}) : super(key: key);
 
-    return hobbiesToShow.isEmpty
-        ? []
-        : [
-            Divider(color: Colors.grey[300]),
-            RichText(
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                text: TextSpan(
-                    style: context.textTheme.bodyText1,
-                    children: hobbiesToShow
-                        .asMap()
-                        .map(
-                          (i, e) => MapEntry(
-                              i,
-                              TextSpan(
-                                text: e.hobby.value != null
-                                    ? '${e.hobby.value}${i < hobbiesToShow.length - 1 ? ', ' : ''}'
-                                    : '',
-                                style: TextStyle(
-                                  color: e.isSelected
-                                      ? context.colorScheme.primary
-                                      : context.colorScheme.onBackground,
-                                ),
-                              )),
-                        )
-                        .values
-                        .toList()))
-          ];
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        text: TextSpan(
+            style: context.textTheme.bodyText1,
+            children: data
+                .asMap()
+                .map(
+                  (i, e) => MapEntry(
+                      i,
+                      TextSpan(
+                        text: e.hobby.value != null
+                            ? '${e.hobby.value}${i < data.length - 1 ? ', ' : ''}'
+                            : '',
+                        style: TextStyle(
+                          color: e.isSelected
+                              ? context.colorScheme.primary
+                              : context.colorScheme.onBackground,
+                        ),
+                      )),
+                )
+                .values
+                .toList()));
   }
 }

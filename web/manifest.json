@@ -1,11 +1,11 @@
 {
-    "name": "cupizz_app",
-    "short_name": "cupizz_app",
+    "name": "Cupizz | Giao lưu, kết bạn, hẹn hò và hơn thế nữa!",
+    "short_name": "Cupizz",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#fb6c6d",
+    "theme_color": "#fb6c6d",
+    "description": "Các bằng hữu độc thân vui vẻ, xin có mấy lời gửi tới các bạn: Nếu bạn đang tìm kiếm người yêu, muốn bắt đầu hẹn hò, hay chỉ đơn giản là muốn có thêm bạn bè, bạn cần có mặt trên Cupizz.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

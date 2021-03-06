@@ -43,7 +43,8 @@ class _HomePageState extends State<HomePage> {
             children: [
               // AnimatedBackground(),
               // Positioned(right: 0, left: 15, top: 30, child: _buildHeader()),
-              _buildCards(), _buildControls(),
+              _buildCards(),
+              _buildControls(),
               SideBar(
                 controller: _drawerController,
                 sideBarSize: constraints.maxWidth,
@@ -177,18 +178,16 @@ class _HomePageState extends State<HomePage> {
                   .onSwipe(context, isSwipeRight: true);
             },
             cards: model.users!
-                .map((e) => ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: UserCard(
-                        simpleUser: e,
-                        onPressed: () {
-                          CupertinoScaffold.showCupertinoModalBottomSheet(
-                              context: context,
-                              builder: (context) => UserScreen(
-                                    params: UserScreenParams(user: e),
-                                  ));
-                        },
-                      ),
+                .map((e) => UserCard(
+                      simpleUser: e,
+                      radius: 15,
+                      onPressed: () {
+                        CupertinoScaffold.showCupertinoModalBottomSheet(
+                            context: context,
+                            builder: (context) => UserScreen(
+                                  params: UserScreenParams(user: e),
+                                ));
+                      },
                     ))
                 .toList(),
           );
