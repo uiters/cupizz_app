@@ -31,7 +31,7 @@ class CreatePostScreen extends StatelessWidget {
                       child: MomentumBuilder(
                           controllers: [CreatePostController],
                           builder: (context, snapshot) {
-                            final model = snapshot<CreatePostModel>()!;
+                            final model = snapshot<CreatePostModel>();
                             return CreatePostImageList(
                               images: model.images,
                               onRemovedImage: (image) {
@@ -71,7 +71,7 @@ class _SubmitButton extends StatelessWidget {
     return MomentumBuilder(
         controllers: [CreatePostController],
         builder: (context, snapshot) {
-          final model = snapshot<CreatePostModel>()!;
+          final model = snapshot<CreatePostModel>();
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
             child: ArgonButton(
@@ -115,8 +115,8 @@ class _CategoriesDropDown extends StatelessWidget {
     return MomentumBuilder(
         controllers: [CreatePostController, SystemController],
         builder: (context, snapshot) {
-          final categories = snapshot<SystemModel>()!.postCategories ?? [];
-          final model = snapshot<CreatePostModel>()!;
+          final categories = snapshot<SystemModel>().postCategories ?? [];
+          final model = snapshot<CreatePostModel>();
 
           return DropdownButton<PostCategory>(
             value: model.selected,
@@ -202,7 +202,7 @@ class _TextField extends StatelessWidget {
         MomentumBuilder(
             controllers: [CreatePostController],
             builder: (context, snapshot) {
-              final model = snapshot<CreatePostModel>()!;
+              final model = snapshot<CreatePostModel>();
               return TextFormField(
                 initialValue: model.content,
                 maxLines: null,

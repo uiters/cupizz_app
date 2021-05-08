@@ -140,7 +140,7 @@ class ListCategories extends StatelessWidget {
       child: MomentumBuilder(
           controllers: [SystemController],
           builder: (context, snapshot) {
-            final systemModel = snapshot<SystemModel>()!;
+            final systemModel = snapshot<SystemModel>();
             if (!systemModel.postCategories.isExistAndNotEmpty) {
               systemModel.controller.getPostCategories();
             }

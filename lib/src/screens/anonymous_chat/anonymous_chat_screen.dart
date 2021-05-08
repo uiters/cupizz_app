@@ -19,7 +19,7 @@ class AnonymousChatScreen extends StatelessWidget {
     return MomentumBuilder(
         controllers: [AnonymousChatController],
         builder: (context, snapshot) {
-          final model = snapshot<AnonymousChatModel>()!;
+          final model = snapshot<AnonymousChatModel>();
           return PrimaryScaffold(
             appBar: BackAppBar(
               title: 'Trò chuyện ẩn danh',
@@ -67,7 +67,7 @@ class AnonymousChatScreen extends StatelessWidget {
                 : MomentumBuilder(
                     controllers: [CurrentUserController],
                     builder: (context, snapshot) {
-                      final model = snapshot<CurrentUserModel>()!;
+                      final model = snapshot<CurrentUserModel>();
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 20),
                         child: Transform.scale(

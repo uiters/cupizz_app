@@ -13,7 +13,7 @@ class _EditReligionScreenState extends State<EditReligionScreen> {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       selectedValue = Momentum.controller<CurrentUserController>(context)
-          .model!
+          .model
           .currentUser
           ?.religious;
       setState(() {});

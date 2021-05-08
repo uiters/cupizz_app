@@ -17,8 +17,8 @@ class HobbiesBottomSheet {
               controllers: [HobbyListController, CurrentUserController],
               builder: (context, snapshot) {
                 final selectedHobbies =
-                    snapshot<CurrentUserModel>()!.currentUser?.hobbies ?? [];
-                final hobbyListModel = snapshot<HobbyListModel>()!;
+                    snapshot<CurrentUserModel>().currentUser?.hobbies ?? [];
+                final hobbyListModel = snapshot<HobbyListModel>();
 
                 if (hobbyListModel.isLoading!) {
                   return LoadingIndicator(padding: EdgeInsets.all(20));

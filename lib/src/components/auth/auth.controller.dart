@@ -16,7 +16,7 @@ class AuthController extends MomentumController<AuthModel> {
     await Get.find<OneSignalService>().init();
     if (await isAuthenticated) {
       unawaited(gotoHome());
-      await dependOn<LocationController>()
+      await controller<LocationController>()
           .checkPermission(AppConfig.navigatorKey.currentContext);
     } else {
       unawaited(gotoAuth());
@@ -35,14 +35,14 @@ class AuthController extends MomentumController<AuthModel> {
 
   Future<void> loginEmail(String email, String password) async {
     await Get.find<AuthService>().loginEmail(email.trim(), password,
-        dependOn<CurrentUserController>().getCurrentUser);
+        controller<CurrentUserController>().getCurrentUser);
     await _afterLogin();
     unawaited(Get.find<StorageService>().saveLoginEmail(email.trim()));
   }
 
   Future<void> loginSocial(SocialProviderType type) async {
     try {
-      model!.update(isLoading: true);
+      model.update(isLoading: true);
       if (type == SocialProviderType.google) {
         final googleSignIn = GoogleSignIn(
           scopes: <String>[
@@ -58,7 +58,7 @@ class AuthController extends MomentumController<AuthModel> {
         final tokenGoogle = auth.accessToken;
         debugPrint('Token Google: $tokenGoogle');
         await Get.find<AuthService>().loginSocial(type, tokenGoogle,
-            dependOn<CurrentUserController>().getCurrentUser);
+            controller<CurrentUserController>().getCurrentUser);
         unawaited(googleSignIn.signOut());
       } else if (type == SocialProviderType.facebook) {
         try {
@@ -69,15 +69,15 @@ class AuthController extends MomentumController<AuthModel> {
           await Get.find<AuthService>().loginSocial(
               SocialProviderType.facebook,
               accessToken.token,
-              dependOn<CurrentUserController>().getCurrentUser);
+              controller<CurrentUserController>().getCurrentUser);
         } on FacebookAuthException catch (e) {
           switch (e.errorCode) {
             case FacebookAuthErrorCode.OPERATION_IN_PROGRESS:
               print('Đang đăng nhập');
-              break;
+              return;
             case FacebookAuthErrorCode.CANCELLED:
               print('login facebook cancelled');
-              break;
+              return;
             case FacebookAuthErrorCode.FAILED:
               print('login facebook failed');
               if (e.message != null) {
@@ -94,7 +94,7 @@ class AuthController extends MomentumController<AuthModel> {
       }
       await _afterLogin();
     } finally {
-      model!.update(isLoading: false);
+      model.update(isLoading: false);
     }
   }
 
@@ -104,7 +104,7 @@ class AuthController extends MomentumController<AuthModel> {
     final userId = await Get.find<StorageService>().getUserId;
     if (userId.isExistAndNotEmpty) {
       await Get.find<OneSignalService>().subscribe(userId!);
-      await dependOn<LocationController>()
+      await controller<LocationController>()
           .checkPermission(AppConfig.navigatorKey.currentContext);
     }
   }
@@ -113,9 +113,9 @@ class AuthController extends MomentumController<AuthModel> {
     await trycatch(() async {
       await Get.find<AuthService>().register(
         registerToken,
-        model!.nickname,
-        model!.password,
-        dependOn<CurrentUserController>().getCurrentUser,
+        model.nickname,
+        model.password,
+        controller<CurrentUserController>().getCurrentUser,
       );
       await _afterLogin();
     });
@@ -124,16 +124,16 @@ class AuthController extends MomentumController<AuthModel> {
   Future<void> registerEmail() async {
     await trycatch(() async {
       final otpToken =
-          await Get.find<AuthService>().registerEmail(model!.email);
-      model!.update(otpToken: otpToken);
+          await Get.find<AuthService>().registerEmail(model.email);
+      model.update(otpToken: otpToken);
     }, throwError: true);
   }
 
   Future<void> vertifyOtp(String otp) async {
-    if (!model!.otpToken.isExistAndNotEmpty) return;
+    if (!model.otpToken.isExistAndNotEmpty) return;
     await trycatch(() async {
       final registerToken =
-          await Get.find<AuthService>().verifyOtpEmail(model!.otpToken, otp);
+          await Get.find<AuthService>().verifyOtpEmail(model.otpToken, otp);
       await _register(registerToken);
     });
   }
@@ -144,7 +144,7 @@ class AuthController extends MomentumController<AuthModel> {
     Get.reset();
     await initServices();
     Momentum.resetAll(AppConfig.navigatorKey.currentContext!);
-    Momentum.restart(AppConfig.navigatorKey.currentContext, momentum());
+    Momentum.restart(AppConfig.navigatorKey.currentContext!, momentum());
     unawaited(Get.offAndToNamed(Routes.login));
   }
 

@@ -130,7 +130,7 @@ class _MyApp extends StatelessWidget {
     return MomentumBuilder(
         controllers: [ThemeController, AuthController],
         builder: (context, snapshot) {
-          final theme = snapshot<ThemeModel>()!.controller.selectedTheme;
+          final theme = snapshot<ThemeModel>().controller.selectedTheme;
           return GetMaterialApp(
             debugShowCheckedModeBanner:
                 AppConfig.instance.flavorName != AppFlavor.PRODUCTION,

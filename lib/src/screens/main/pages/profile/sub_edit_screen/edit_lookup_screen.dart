@@ -13,7 +13,7 @@ class _EditLookupScreenState extends State<EditLookupScreen> {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       selectedValues = Momentum.controller<CurrentUserController>(context)
-          .model!
+          .model
           .currentUser
           ?.lookingFors;
       setState(() {});

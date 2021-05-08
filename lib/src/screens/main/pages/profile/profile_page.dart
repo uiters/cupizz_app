@@ -19,7 +19,7 @@ class _ProfilePageState extends State<ProfilePage>
     return MomentumBuilder(
       controllers: [CurrentUserController],
       builder: (context, snapshot) {
-        var model = snapshot<CurrentUserModel>()!;
+        var model = snapshot<CurrentUserModel>();
         return UserProfile(
           user: model.currentUser,
           showBackButton: false,

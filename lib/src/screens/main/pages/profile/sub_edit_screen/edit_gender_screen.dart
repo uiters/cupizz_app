@@ -13,7 +13,7 @@ class _EditGenderScreenState extends State<EditGenderScreen> {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       selectedValue = Momentum.controller<CurrentUserController>(context)
-          .model!
+          .model
           .currentUser
           ?.gender;
       setState(() {});

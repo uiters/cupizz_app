@@ -9,13 +9,13 @@ class SelectQuestionScreen extends StatelessWidget {
   void selectQuesion(BuildContext context, Question question) {
     final controller =
         Momentum.controller<AnswerQuestionScreenController>(context);
-    if (controller.model!.question == null) {
+    if (controller.model.question == null) {
       Get.back();
       Get.toNamed(Routes.answer);
     } else {
       Get.back();
     }
-    controller.model!.update(question: question);
+    controller.model.update(question: question);
   }
 
   @override
@@ -25,7 +25,7 @@ class SelectQuestionScreen extends StatelessWidget {
           SelectQuestionScreenController,
         ],
         builder: (context, snapshot) {
-          final model = snapshot<SelectQuestionScreenModel>()!;
+          final model = snapshot<SelectQuestionScreenModel>();
           return PrimaryScaffold(
             appBar: BackAppBar(
               title: 'Chọn câu hỏi',

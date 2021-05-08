@@ -18,7 +18,7 @@ class _EditLocationScreenState extends State<EditLocationScreen> {
     _currentAddress = '';
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       _currentAddress = Momentum.controller<CurrentUserController>(context)
-              .model!
+              .model
               .currentUser
               ?.address ??
           '';

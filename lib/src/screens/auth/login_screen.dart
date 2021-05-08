@@ -48,13 +48,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 await controller.verifyOtp(otp);
               },
             ).then((v) {
-              if (controller.model!.data != null) {
+              if (controller.model.data != null) {
                 ChangePassDialog.show(
                   context,
-                  avatar: controller.model!.data?.avatar?.thumbnail,
-                  nickName: controller.model!.data?.nickName,
+                  avatar: controller.model.data?.avatar?.thumbnail,
+                  nickName: controller.model.data?.nickName,
                   requireOldPass: false,
-                  isLoading: controller.model!.isChangingPass,
+                  isLoading: controller.model.isChangingPass,
                   onSend: (oldPass, newPass) async {
                     await controller.changePass(newPass);
                   },
@@ -74,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _onLogin() async {
     if (formKey.currentState!.validate()) {
-      final authCtl = Momentum.of<AuthController>(context);
+      final authCtl = Momentum.controller<AuthController>(context);
       try {
         await authCtl.loginEmail(email.text, password.text);
       } catch (e) {
@@ -111,8 +111,8 @@ class _LoginScreenState extends State<LoginScreen> {
     return MomentumBuilder(
         controllers: [AuthController, ForgotController],
         builder: (context, snapshot) {
-          final model = snapshot<AuthModel>()!;
-          final modelForgot = snapshot<ForgotPassModel>()!;
+          final model = snapshot<AuthModel>();
+          final modelForgot = snapshot<ForgotPassModel>();
           return PrimaryScaffold(
             isLoading: model.isLoading ?? modelForgot.isSendingOtp ?? false,
             body: SingleChildScrollView(

@@ -30,7 +30,7 @@ class UserScreen extends StatelessWidget {
     return MomentumBuilder(
       controllers: [UserScreenController],
       builder: (context, snapshot) {
-        var model = snapshot<_UserScreenModel>()!;
+        var model = snapshot<_UserScreenModel>();
         return UserProfile(
           user: model.user,
           showBackButton: true,

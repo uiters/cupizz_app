@@ -45,7 +45,7 @@ class _InCallScreenState extends State<InCallScreen> {
     final appId =
         await Momentum.controller<SystemController>(context).getAgoraAppId();
     final callMessage =
-        Momentum.controller<CallController>(context).model!.currentCall;
+        Momentum.controller<CallController>(context).model.currentCall;
 
     if (!appId.isExistAndNotEmpty) {
       setState(() {

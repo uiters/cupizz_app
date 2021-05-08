@@ -28,7 +28,7 @@ class _SettingNotiBottomSheet {
           return MomentumBuilder(
               controllers: [CurrentUserController],
               builder: (context, snapshot) {
-                final model = snapshot<CurrentUserModel>()!;
+                final model = snapshot<CurrentUserModel>();
                 return Column(
                   children: [
                     ...NotificationType.getAll()

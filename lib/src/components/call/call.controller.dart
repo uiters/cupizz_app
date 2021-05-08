@@ -25,7 +25,7 @@ class CallController extends MomentumController<CallModel> {
       ),
     )
         .listen((callMessage) {
-      model!.update(currentCall: callMessage);
+      model.update(currentCall: callMessage);
 
       if (callMessage.callStatus == CallStatus.missing ||
           callMessage.callStatus == CallStatus.rejected) {
@@ -45,31 +45,31 @@ class CallController extends MomentumController<CallModel> {
   }
 
   Future onNewIncomingCall(Message? call) async {
-    if (model!.currentIncomingCall != null) return;
+    if (model.currentIncomingCall != null) return;
 
-    model!.update(currentIncomingCall: call);
+    model.update(currentIncomingCall: call);
     unawaited(Get.toNamed(Routes.incomingCall));
     unawaited(Vibration.vibrate(duration: 15000));
   }
 
   void onNewMissingCall(Message? call) {
-    if (model!.currentIncomingCall?.id != call?.id &&
-        model!.currentCall?.id != call?.id) return;
+    if (model.currentIncomingCall?.id != call?.id &&
+        model.currentCall?.id != call?.id) return;
     endCall();
   }
 
   Future acceptIncomingCall() async {
-    if (model!.currentIncomingCall != null) {
+    if (model.currentIncomingCall != null) {
       await Get.find<MessageService>()
-          .acceptCall(model!.currentIncomingCall!.id);
+          .acceptCall(model.currentIncomingCall!.id);
     }
-    model!.update(currentCall: model!.currentIncomingCall);
-    model!.removeCurrentIncomingCall();
+    model.update(currentCall: model.currentIncomingCall);
+    model.removeCurrentIncomingCall();
     unawaited(Get.offNamed(Routes.inCall));
   }
 
   void endCall() {
-    final call = model!.currentIncomingCall ?? model!.currentCall;
+    final call = model.currentIncomingCall ?? model.currentCall;
     if (call != null) {
       Get.find<MessageService>().endCall(call.id);
     }
@@ -83,7 +83,7 @@ class CallController extends MomentumController<CallModel> {
     }
     callSubscription?.cancel();
     Vibration.cancel();
-    model!.removeCurrentCall();
-    model!.removeCurrentIncomingCall();
+    model.removeCurrentCall();
+    model.removeCurrentIncomingCall();
   }
 }

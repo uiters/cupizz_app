@@ -32,7 +32,7 @@ class ComposeBottomIconWidget extends StatelessWidget {
           MomentumBuilder(
               controllers: [SystemController],
               builder: (context, snapshot) {
-                final model = snapshot<SystemModel>()!;
+                final model = snapshot<SystemModel>();
                 return Row(
                   children: (model.colorsOfAnswer ?? [])
                       .map<Widget>((e) => CupertinoButton(

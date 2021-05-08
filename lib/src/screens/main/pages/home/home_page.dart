@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage>
     return MomentumBuilder(
         controllers: [RecommendableUsersController],
         builder: (context, snapshot) {
-          var model = snapshot<RecommendableUsersModel>()!;
+          var model = snapshot<RecommendableUsersModel>();
           if (model.users.isExistAndNotEmpty) {
             return Positioned(
               bottom: 10,
@@ -118,11 +118,11 @@ class _HomePageState extends State<HomePage>
     return MomentumBuilder(
         controllers: [RecommendableUsersController],
         builder: (context, snapshot) {
-          var model = snapshot<RecommendableUsersModel>()!;
+          var model = snapshot<RecommendableUsersModel>();
           if (model.isLoading ||
               !model.users.isExistAndNotEmpty && !model.isLastPage) {
             if (!model.users.isExistAndNotEmpty && !model.isLastPage) {
-              Momentum.of<RecommendableUsersController>(context)
+              Momentum.controller<RecommendableUsersController>(context)
                   .fetchRecommendableUsers();
             }
             return Center(child: LoadingIndicator());
@@ -130,7 +130,7 @@ class _HomePageState extends State<HomePage>
             return ErrorIndicator(
               moreErrorDetail: model.error,
               onReload: () {
-                Momentum.of<RecommendableUsersController>(context)
+                Momentum.controller<RecommendableUsersController>(context)
                     .fetchRecommendableUsers();
               },
             );

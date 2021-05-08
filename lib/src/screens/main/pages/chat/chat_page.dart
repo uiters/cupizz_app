@@ -70,7 +70,7 @@ class _ChatPageState extends State<ChatPage>
         child: MomentumBuilder(
             controllers: [ChatPageController],
             builder: (context, snapshot) {
-              final model = snapshot<ChatPageModel>()!;
+              final model = snapshot<ChatPageModel>();
               return Column(
                 children: <Widget>[
                   buildHeadingBar(context),
@@ -170,7 +170,7 @@ class _ChatPageState extends State<ChatPage>
                 controllers: [ChatPageController],
                 builder: (context, snapshot) {
                   final unreadMessageCount =
-                      snapshot<ChatPageModel>()?.unreadMessageCount ?? 0;
+                      snapshot<ChatPageModel>().unreadMessageCount ?? 0;
                   return buildBadge(unreadMessageCount);
                 })
           ],

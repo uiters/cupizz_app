@@ -13,7 +13,7 @@ class _EditHeightScreenState extends State<EditHeightScreen> {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       selectedHeight = Momentum.controller<CurrentUserController>(context)
-              .model!
+              .model
               .currentUser
               ?.height
               ?.toDouble() ??

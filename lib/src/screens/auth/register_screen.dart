@@ -103,7 +103,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                         validator: Validator.name,
                         onChanged: (v) {
                           Momentum.controller<AuthController>(context)
-                              .model!
+                              .model
                               .update(nickname: v);
                         },
                         focusNode: nameFocus,
@@ -122,7 +122,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                         focusNode: emailFocus,
                         onChanged: (v) {
                           Momentum.controller<AuthController>(context)
-                              .model!
+                              .model
                               .update(email: v);
                         },
                       ),
@@ -140,7 +140,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                         validator: Validator.password,
                         onChanged: (v) {
                           Momentum.controller<AuthController>(context)
-                              .model!
+                              .model
                               .update(password: v);
                         },
                       ),

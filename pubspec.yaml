@@ -69,6 +69,7 @@ dependencies:
   hive_flutter: ^1.0.0
   agora_rtc_engine: ^4.0.0-rc.1
   modal_bottom_sheet: ^2.0.0
+  momentum: ^2.0.1
   
   # dash_chat
   flutter_parsed_text:

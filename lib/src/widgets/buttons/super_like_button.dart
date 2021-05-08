@@ -50,7 +50,7 @@ class SuperLikeButtonState extends State<SuperLikeButton> {
     return MomentumBuilder(
         controllers: [CurrentUserController],
         builder: (context, snapshot) {
-          final model = snapshot<CurrentUserModel>()!;
+          final model = snapshot<CurrentUserModel>();
           return GestureDetector(
             onTap: model.currentUser!.getRemainingSuperLike > 0
                 ? widget.onPressed as void Function()?

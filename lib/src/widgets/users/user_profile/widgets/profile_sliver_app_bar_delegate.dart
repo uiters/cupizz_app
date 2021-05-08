@@ -76,7 +76,7 @@ class _ProfileSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
         child: MomentumBuilder(
             controllers: [CurrentUserController],
             builder: (context, snapshot) {
-              final model = snapshot<CurrentUserModel>()!;
+              final model = snapshot<CurrentUserModel>();
               return CupertinoButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {
@@ -140,7 +140,7 @@ class _ProfileSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
           child: MomentumBuilder(
               controllers: [CurrentUserController],
               builder: (context, snapshot) {
-                final model = snapshot<CurrentUserModel>()!;
+                final model = snapshot<CurrentUserModel>();
                 return CupertinoButton(
                   padding: EdgeInsets.zero,
                   onPressed: () => Menu(
@@ -189,7 +189,7 @@ class _ProfileSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
         child: MomentumBuilder(
             controllers: [SystemController],
             builder: (context, snapshot) {
-              final model = snapshot<SystemModel>()!;
+              final model = snapshot<SystemModel>();
               final number = model.unreadAcceptedFriendCount +
                   model.unreadReceiveFriendCount;
               return OpacityIconButton(

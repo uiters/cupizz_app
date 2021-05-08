@@ -27,11 +27,11 @@ class ChatPageController extends MomentumController<ChatPageModel> {
   }
 
   void initState() async {
-    if (!model!.conversations.isExistAndNotEmpty) {
-      model!.update(isLoading: true);
+    if (!model.conversations.isExistAndNotEmpty) {
+      model.update(isLoading: true);
       await _reload();
       _connectSubsciption();
-      model!.update(isLoading: false);
+      model.update(isLoading: false);
     }
   }
 
@@ -52,36 +52,36 @@ class ChatPageController extends MomentumController<ChatPageModel> {
 
   void onConversationChange(Conversation newConversation) {
     final oldConversationIndex =
-        model!.conversations.indexWhere((e) => e.id == newConversation.id);
+        model.conversations.indexWhere((e) => e.id == newConversation.id);
 
     if (oldConversationIndex >= 0) {
-      if (model!.conversations[oldConversationIndex].newestMessage?.id ==
+      if (model.conversations[oldConversationIndex].newestMessage?.id ==
           newConversation.newestMessage?.id) {
-        model!.conversations[oldConversationIndex] = newConversation;
+        model.conversations[oldConversationIndex] = newConversation;
       } else {
-        model!.conversations
+        model.conversations
           ..removeAt(oldConversationIndex)
           ..insert(0, newConversation);
       }
     } else {
-      model!.conversations.insert(0, newConversation);
+      model.conversations.insert(0, newConversation);
     }
 
     // Show Incoming call screen if newest message is a call
     if (newConversation.newestMessage?.callStatus == CallStatus.ringing &&
         !newConversation.newestMessage!.isCaller!) {
-      dependOn<CallController>()
+      controller<CallController>()
           .onNewIncomingCall(newConversation.newestMessage);
     } else if (newConversation.newestMessage?.callStatus ==
             CallStatus.missing ||
         newConversation.newestMessage?.callStatus == CallStatus.rejected ||
         newConversation.newestMessage?.callStatus == CallStatus.ended) {
-      dependOn<CallController>()
+      controller<CallController>()
           .onNewMissingCall(newConversation.newestMessage);
     }
 
-    model!.update(conversations: model!.conversations);
-    dependOn<SystemController>().getUnreadMessageCount();
+    model.update(conversations: model.conversations);
+    controller<SystemController>().getUnreadMessageCount();
   }
 
   Future refresh() async {
@@ -90,17 +90,17 @@ class ChatPageController extends MomentumController<ChatPageModel> {
   }
 
   Future loadmore() async {
-    if (model!.isLastPage!) return;
+    if (model.isLastPage!) return;
     try {
       final data = await Get.find<MessageService>().getMyConversations(
-        page: model!.currentPage! + 1,
+        page: model.currentPage! + 1,
       );
       final conversations = data.data!;
-      model!.conversations.addAll(conversations);
+      model.conversations.addAll(conversations);
 
-      model!.update(
-        conversations: model!.conversations,
-        currentPage: model!.currentPage! + 1,
+      model.update(
+        conversations: model.conversations,
+        currentPage: model.currentPage! + 1,
         isLastPage: data.isLastPage,
       );
     } catch (e) {
@@ -114,7 +114,7 @@ class ChatPageController extends MomentumController<ChatPageModel> {
       final data = await Get.find<MessageService>().getMyConversations(
         page: 1,
       );
-      model!.update(
+      model.update(
         conversations: data.data,
         currentPage: 1,
         isLastPage: data.isLastPage,

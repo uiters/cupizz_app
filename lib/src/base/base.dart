@@ -27,7 +27,7 @@ export '../constants/index.dart';
 export '../helpers/index.dart';
 export '../models/index.dart';
 export '../packages/index.dart';
-export '../packages/momentum/momentum.dart';
+export 'package:momentum/momentum.dart';
 export '../routes.dart';
 export '../screens/index.dart';
 export '../services/index.dart';

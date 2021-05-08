@@ -21,8 +21,8 @@ class _ImagesCropperScreenState extends State<ImagesCropperScreen> {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       if (widget.files!.length == 1) {
-        cropImage(context, widget.files![0]!, widget.aspectRatio)
-            .then((v) => Navigator.pop(context, [v]));
+        cropImage(context, widget.files![0]!, widget.aspectRatio).then(
+            (v) => Navigator.pop(context, [v].whereType<File>().toList()));
       }
     });
   }
@@ -35,7 +35,10 @@ class _ImagesCropperScreenState extends State<ImagesCropperScreen> {
         actions: [
           SaveButton(
             onPressed: () {
-              Navigator.pop(context, widget.files);
+              Navigator.pop(
+                context,
+                widget.files?.whereType<File>().toList() ?? [],
+              );
             },
           )
         ],

@@ -10,7 +10,7 @@ class ThemeController extends MomentumController<ThemeModel> {
   ThemeModel init() {
     _storage = Get.find<StorageService>();
     _storage.getTheme.then((value) {
-      model!.update(activeTheme: value);
+      model.update(activeTheme: value);
     });
     return ThemeModel(
       this,
@@ -24,7 +24,7 @@ class ThemeController extends MomentumController<ThemeModel> {
 
   void _selectTheme(int index) {
     _storage.saveTheme(index);
-    model!.update(activeTheme: index);
+    model.update(activeTheme: index);
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarBrightness: themes[index].brightness,
@@ -36,7 +36,7 @@ class ThemeController extends MomentumController<ThemeModel> {
     );
   }
 
-  ThemeData get selectedTheme => themes[model!.activeTheme!];
+  ThemeData get selectedTheme => themes[model.activeTheme!];
 
   List<ThemeData> get themes {
     return [

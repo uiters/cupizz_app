@@ -14,7 +14,7 @@ class _EditEducationLevelScreenState extends State<EditEducationLevelScreen> {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       selectedValue = Momentum.controller<CurrentUserController>(context)
-          .model!
+          .model
           .currentUser
           ?.educationLevel;
       setState(() {});

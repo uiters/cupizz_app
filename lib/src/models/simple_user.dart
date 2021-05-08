@@ -21,9 +21,8 @@ class SimpleUser extends ChatUser {
   List<HobbyWithIsSelect>? _sameHobbies;
   List<HobbyWithIsSelect>? getSameHobbies(BuildContext context) {
     if (_sameHobbies == null) {
-      final currentUserHobbies = Momentum.of<CurrentUserController>(context)
-              .model!
-              .currentUser
+      final currentUserHobbies = Momentum.controller<CurrentUserController>(context)
+              .model.currentUser
               ?.hobbies ??
           [];
 

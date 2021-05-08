@@ -117,7 +117,7 @@ class _SideBarState extends State<SideBar>
       child: MomentumBuilder(
           controllers: [CurrentUserController],
           builder: (context, snapshot) {
-            final model = snapshot<CurrentUserModel>()!;
+            final model = snapshot<CurrentUserModel>();
             if (model.currentUser == null) {
               return ErrorIndicator(
                 onReload: Momentum.controller<CurrentUserController>(context)
@@ -216,7 +216,7 @@ class _SideBarState extends State<SideBar>
         InkWell(
           enableFeedback: true,
           onTap: () {
-            Momentum.of<ThemeController>(context).randomTheme();
+            Momentum.controller<ThemeController>(context).randomTheme();
           },
           child: Icon(
             Icons.color_lens,

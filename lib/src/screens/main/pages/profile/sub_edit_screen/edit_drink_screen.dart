@@ -13,7 +13,7 @@ class _EditDrinkScreenState extends State<EditDrinkScreen> {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       selectedValue = Momentum.controller<CurrentUserController>(context)
-          .model!
+          .model
           .currentUser
           ?.drinking;
       setState(() {});

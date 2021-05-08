@@ -126,7 +126,7 @@ class CommentBottomSheet {
                                   user: !controller.isIncognitoComment
                                       ? Momentum.controller<
                                               CurrentUserController>(context)
-                                          .model!
+                                          .model
                                           .currentUser
                                       : null),
                             ),

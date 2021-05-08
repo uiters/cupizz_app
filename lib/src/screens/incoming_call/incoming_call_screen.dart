@@ -17,7 +17,7 @@ class InComingCallScreen extends StatelessWidget {
       body: MomentumBuilder(
           controllers: [CallController],
           builder: (context, snapshot) {
-            final model = snapshot<CallModel>()!;
+            final model = snapshot<CallModel>();
             final avatar =
                 args?.avatar ?? model.currentIncomingCall?.sender?.avatar?.url;
             final name =

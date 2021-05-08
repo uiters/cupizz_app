@@ -36,7 +36,7 @@ class SettingsBottomSheet {
 
   Widget _buildFilter() {
     final controller = Momentum.controller<FriendPageController>(context);
-    final model = controller.model!;
+    final model = controller.model;
     return _buildItem(
       title: Strings.friendPage.filterTitle,
       body: CustomGridView(
@@ -61,7 +61,7 @@ class SettingsBottomSheet {
 
   Widget _buildSort() {
     final controller = Momentum.controller<FriendPageController>(context);
-    final model = controller.model!;
+    final model = controller.model;
     return _buildItem(
       title: Strings.friendPage.sortTitle,
       body: Row(

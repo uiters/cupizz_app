@@ -44,11 +44,11 @@ class _FriendPageV2State extends MomentumState<FriendPageV2>
 
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       Momentum.controller<FriendPageV2Controller>(context)
-          .model!
+          .model
           .update(animationController: animationController);
       _pageController.animateToPage(
           Momentum.controller<FriendPageV2Controller>(context)
-              .model!
+              .model
               .currentTab!,
           duration: Duration(milliseconds: 10),
           curve: Curves.ease);
@@ -72,7 +72,7 @@ class _FriendPageV2State extends MomentumState<FriendPageV2>
     return MomentumBuilder(
         controllers: [FriendPageV2Controller],
         builder: (context, snapshot) {
-          final model = snapshot<FriendPageV2Model>()!;
+          final model = snapshot<FriendPageV2Model>();
           return PrimaryScaffold(
             appBar: BackAppBar(title: 'Yêu thích'),
             body: NestedScrollView(
@@ -294,7 +294,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                           child: MomentumBuilder(
                               controllers: [SystemController],
                               builder: (context, snapshot) {
-                                final model = snapshot<SystemModel>()!;
+                                final model = snapshot<SystemModel>();
                                 final badgeCount = i == 0
                                     ? model.unreadAcceptedFriendCount
                                     : model.unreadReceiveFriendCount;

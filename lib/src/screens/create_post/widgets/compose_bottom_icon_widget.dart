@@ -21,7 +21,7 @@ class ComposeBottomIconWidget extends StatelessWidget {
     return MomentumBuilder(
         controllers: [CreatePostController],
         builder: (context, snapshot) {
-          final model = snapshot<CreatePostModel>()!;
+          final model = snapshot<CreatePostModel>();
           return Container(
             width: MediaQuery.of(context).size.width,
             height: 50,

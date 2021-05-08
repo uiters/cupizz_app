@@ -42,7 +42,7 @@ class _MainScreenState extends MomentumState<MainScreen>
         _tabController = TabController(
           length: _tabs.length,
           vsync: this,
-          initialIndex: _screenController.model!.currentTabIndex!,
+          initialIndex: _screenController.model.currentTabIndex!,
         );
       });
 
@@ -55,7 +55,7 @@ class _MainScreenState extends MomentumState<MainScreen>
   @override
   Widget build(BuildContext context) {
     final currentUser =
-        Momentum.controller<CurrentUserController>(context).model!.currentUser;
+        Momentum.controller<CurrentUserController>(context).model.currentUser;
     return PrimaryScaffold(
       body: _tabController == null
           ? const SizedBox.shrink()
@@ -83,8 +83,8 @@ class _MainScreenState extends MomentumState<MainScreen>
             child: MomentumBuilder(
                 controllers: [MainScreenController, SystemController],
                 builder: (context, snapshot) {
-                  final model = snapshot<MainScreenModel>()!;
-                  final systemModel = snapshot<SystemModel>()!;
+                  final model = snapshot<MainScreenModel>();
+                  final systemModel = snapshot<SystemModel>();
                   return GNav(
                       gap: 8,
                       activeColor: context.colorScheme.onBackground,

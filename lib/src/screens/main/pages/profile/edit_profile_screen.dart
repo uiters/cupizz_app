@@ -71,7 +71,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
       body: MomentumBuilder(
           controllers: [CurrentUserController],
           builder: (context, snapshot) {
-            model = snapshot<CurrentUserModel>()!;
+            model = snapshot<CurrentUserModel>();
             user = model.currentUser;
             return SingleChildScrollView(
               controller: scrollController,

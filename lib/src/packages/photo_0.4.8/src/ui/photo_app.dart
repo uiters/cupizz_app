@@ -34,7 +34,7 @@ class PhotoApp extends StatelessWidget {
       pickedAssetList: pickedAssetList,
       child: PhotoMainPage(
         onClose: (List<AssetEntity> value) async {
-          List<File?>? files;
+          var files = <File>[];
           if (options!.isCropImage!) {
             final listFile =
                 await Future.wait(value.map((e) => e.file).toList());
@@ -47,9 +47,11 @@ class PhotoApp extends StatelessWidget {
                       )),
             );
           } else {
-            files = await Future.wait(value.map((e) => e.file).toList());
+            files = (await Future.wait(value.map((e) => e.file).toList()))
+                .whereType<File>()
+                .toList();
           }
-          if (files != null && files.isNotEmpty) {
+          if (files.isNotEmpty) {
             Navigator.pop(context, files);
           }
         },

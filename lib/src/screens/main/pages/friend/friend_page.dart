@@ -73,7 +73,7 @@ class _FriendPageState extends MomentumState<FriendPage>
 
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       Momentum.controller<FriendPageController>(context)
-        ..model!.update(animationController: animationController)
+        ..model.update(animationController: animationController)
         // ..refresh()
         ..listen<FriendPageEvent>(
           state: this,
@@ -107,7 +107,7 @@ class _FriendPageState extends MomentumState<FriendPage>
           child: MomentumBuilder(
               controllers: [FriendPageController],
               builder: (context, snapshot) {
-                final model = snapshot<FriendPageModel>()!;
+                final model = snapshot<FriendPageModel>();
                 final friendsList = [
                   ...model.friends,
                   ...!model.isLastPage!

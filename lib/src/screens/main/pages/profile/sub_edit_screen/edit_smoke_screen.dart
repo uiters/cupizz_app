@@ -13,7 +13,7 @@ class _EditSmokeScreenState extends State<EditSmokeScreen> {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       selectedValue = Momentum.controller<CurrentUserController>(context)
-          .model!
+          .model
           .currentUser
           ?.drinking;
       setState(() {});

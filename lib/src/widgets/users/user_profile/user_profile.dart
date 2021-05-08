@@ -291,7 +291,7 @@ class UserProfileState extends MomentumState<UserProfile>
             MomentumBuilder(
                 controllers: [CurrentUserController],
                 builder: (context, snapshot) {
-                  final model = snapshot<CurrentUserModel>()!;
+                  final model = snapshot<CurrentUserModel>();
                   if (model.isAddingImage) return LoadingIndicator();
                   return Column(
                     children: [

@@ -25,7 +25,7 @@ class SystemController extends MomentumController<SystemModel> {
     await trycatch(() async {
       final colors = await Get.find<SystemService>().getColorsOfAnswer();
       WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-        model!.update(colorsOfAnswer: colors);
+        model.update(colorsOfAnswer: colors);
       });
     });
   }
@@ -41,7 +41,7 @@ class SystemController extends MomentumController<SystemModel> {
       final unreadMessageCount =
           await Get.find<SystemService>().getUnreadMessageCount();
       WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-        model!.update(unreadMessageCount: unreadMessageCount);
+        model.update(unreadMessageCount: unreadMessageCount);
       });
     });
   }
@@ -51,7 +51,7 @@ class SystemController extends MomentumController<SystemModel> {
       final unreadReceiveFriendCount =
           await Get.find<SystemService>().getUnreadReceiveFriendCount();
       WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-        model!.update(unreadReceiveFriendCount: unreadReceiveFriendCount);
+        model.update(unreadReceiveFriendCount: unreadReceiveFriendCount);
       });
     });
   }
@@ -61,7 +61,7 @@ class SystemController extends MomentumController<SystemModel> {
       final unreadAcceptedFriendCount =
           await Get.find<SystemService>().getUnreadAcceptedFriendCount();
       WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-        model!.update(unreadAcceptedFriendCount: unreadAcceptedFriendCount);
+        model.update(unreadAcceptedFriendCount: unreadAcceptedFriendCount);
       });
     });
   }
@@ -70,24 +70,24 @@ class SystemController extends MomentumController<SystemModel> {
     await trycatch(() async {
       final postCategories = await Get.find<PostService>().getPostCategories();
       WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-        model!.update(postCategories: postCategories);
+        model.update(postCategories: postCategories);
       });
     });
   }
 
   Future<String?> getAgoraAppId() async {
-    if (!model!.agoraAppId.isExistAndNotEmpty) {
+    if (!model.agoraAppId.isExistAndNotEmpty) {
       await _fetchAgoraAppId();
     }
 
-    return model!.agoraAppId;
+    return model.agoraAppId;
   }
 
   Future _fetchAgoraAppId() async {
     await trycatch(() async {
       final getAgoraAppId = await Get.find<SystemService>().getAgoraAppId();
       WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-        model!.update(agoraAppId: getAgoraAppId);
+        model.update(agoraAppId: getAgoraAppId);
       });
     });
   }

@@ -52,7 +52,7 @@ class _EditUserImagesScreenState extends State<EditUserImagesScreen>
     return MomentumBuilder(
         controllers: [CurrentUserController],
         builder: (context, snapshot) {
-          final model = snapshot<CurrentUserModel>()!;
+          final model = snapshot<CurrentUserModel>();
 
           return PrimaryScaffold(
             isLoading: model.isDeletingImage,

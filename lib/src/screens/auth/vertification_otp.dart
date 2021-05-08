@@ -81,7 +81,7 @@ class _VerificationOtpScreenState extends State<VerificationOtpScreen> {
                       children: [
                         TextSpan(
                             text: Momentum.controller<AuthController>(context)
-                                .model!
+                                .model
                                 .email,
                             style: TextStyle(
                                 color: Colors.black,
