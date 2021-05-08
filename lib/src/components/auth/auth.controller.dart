@@ -80,10 +80,11 @@ class AuthController extends MomentumController<AuthModel> {
               break;
             case FacebookAuthErrorCode.FAILED:
               print('login facebook failed');
-              await Fluttertoast.showToast(msg: e.toString());
-              break;
+              if (e.message != null) {
+                await Fluttertoast.showToast(msg: e.message!);
+              }
+              rethrow;
           }
-          rethrow;
         } catch (e) {
           await Fluttertoast.showToast(msg: e.toString());
           rethrow;
@@ -92,9 +93,6 @@ class AuthController extends MomentumController<AuthModel> {
         return;
       }
       await _afterLogin();
-    } catch (e) {
-      await Fluttertoast.showToast(msg: '$e');
-      rethrow;
     } finally {
       model!.update(isLoading: false);
     }

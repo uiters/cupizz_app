@@ -31,7 +31,7 @@ dependencies:
       branch: feature/null-safety-support
   google_nav_bar: ^5.0.3
   dotted_border: ^2.0.0-nullsafety.0
-  cached_network_image: ^3.0.0-nullsafety
+  cached_network_image: ^3.0.0
   onesignal_flutter: 
     git: 
       url: https://github.com/hienlh/OneSignal-Flutter-SDK
