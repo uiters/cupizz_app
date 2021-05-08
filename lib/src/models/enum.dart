@@ -1,5 +1,7 @@
 import 'package:cupizz_app/src/base/base.dart';
 
+enum LoadStatus { init, loading, success, failure }
+
 class FileType extends Enumerable<String> {
   @override
   final String rawValue;

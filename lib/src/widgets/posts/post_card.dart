@@ -1,6 +1,6 @@
 import 'package:cupizz_app/src/base/base.dart';
 import 'package:cupizz_app/src/packages/like_button/utils/like_button_typedef.dart';
-import 'package:cupizz_app/src/screens/main/pages/post/components/post_page.controller.dart';
+import 'package:cupizz_app/src/screens/main/pages/post/post_page.controller.dart';
 import 'package:flutter/gestures.dart';
 
 class PostCard extends StatelessWidget {
@@ -116,7 +116,7 @@ class _PostName extends StatelessWidget {
                         ..onTap = post?.category == null
                             ? null
                             : () {
-                                Momentum.controller<PostPageController>(context)
+                                Get.find<PostPageController>()
                                     .selectCategory(post!.category);
                               }),
                 ],
@@ -154,51 +154,61 @@ class _PostAction extends StatelessWidget {
     return IntrinsicHeight(
       child: Row(
         children: [
-          LikeButton(
-            onTap: (v) async {
-              final _c = Momentum.controller<PostPageController>(context);
-              if (!v) {
-                await _c.likePost(post!);
-              } else {
-                await _c.unlikePost(post!);
-              }
-              return true;
-            },
-            isLiked: post!.myLikedPostType != null,
-            likeCount: post!.totalReaction,
-            likeBuilder: (isLiked) {
-              return Icon(
-                  isLiked ? Icons.favorite : Icons.favorite_border_sharp,
-                  color: color);
-            },
-            likeCountAnimationType: LikeCountAnimationType.all,
-            likeCountPadding: EdgeInsets.only(left: 10),
-            countBuilder: (likeCount, isLiked, text) {
-              return likeCount != null && likeCount <= 0
-                  ? const SizedBox.shrink()
-                  : Text(
-                      text,
-                      style:
-                          context.textTheme.subtitle1!.copyWith(color: color),
-                    );
+          GetBuilder<PostPageController>(
+            init: Get.find<PostPageController>(),
+            builder: (c) {
+              return LikeButton(
+                onTap: (v) async {
+                  if (!v) {
+                    await c.likePost(post!);
+                  } else {
+                    await c.unlikePost(post!);
+                  }
+                  return true;
+                },
+                isLiked: post!.myLikedPostType != null,
+                likeCount: post!.totalReaction,
+                likeBuilder: (isLiked) {
+                  return Icon(
+                      isLiked ? Icons.favorite : Icons.favorite_border_sharp,
+                      color: color);
+                },
+                likeCountAnimationType: LikeCountAnimationType.all,
+                likeCountPadding: EdgeInsets.only(left: 10),
+                countBuilder: (likeCount, isLiked, text) {
+                  return likeCount != null && likeCount <= 0
+                      ? const SizedBox.shrink()
+                      : Text(
+                          text,
+                          style: context.textTheme.subtitle1!
+                              .copyWith(color: color),
+                        );
+                },
+              );
             },
           ),
           const SizedBox(width: 16),
-          ActionIcon(
-            onTap: () {
-              CommentBottomSheet(
-                context,
-                post: post!,
-                totalLike: post!.totalReaction,
-                autoFocusInput: false,
-              ).show();
+          GetBuilder<PostPageController>(
+            init: Get.find<PostPageController>(),
+            builder: (c) {
+              return ActionIcon(
+                onTap: () {
+                  CommentBottomSheet(
+                    context,
+                    controller: c,
+                    post: post!,
+                    totalLike: post!.totalReaction,
+                    autoFocusInput: false,
+                  ).show();
+                },
+                title: post!.commentCount.toString(),
+                iconData: CupertinoIcons.chat_bubble_2,
+                isHorizontal: true,
+                color: color,
+                titleStyle: iconTextStyle,
+                hasTitle: post!.commentCount! > 0,
+              );
             },
-            title: post!.commentCount.toString(),
-            iconData: CupertinoIcons.chat_bubble_2,
-            isHorizontal: true,
-            color: color,
-            titleStyle: iconTextStyle,
-            hasTitle: post!.commentCount! > 0,
           ),
           Spacer(),
           IconButton(

@@ -1,5 +1,5 @@
 import 'package:cupizz_app/src/base/base.dart';
-import 'package:cupizz_app/src/screens/main/pages/post/components/post_page.controller.dart';
+import 'package:cupizz_app/src/screens/main/pages/post/post_page.controller.dart';
 
 import 'create_post.model.dart';
 
@@ -40,9 +40,9 @@ class CreatePostController extends MomentumController<CreatePostModel> {
       return;
     }
     await trycatch(() async {
-      final post = await Get.find<PostService>()
+      await Get.find<PostService>()
           .createPost(model!.selected!.id, model!.content, model!.images);
-      dependOn<PostPageController>().insertPost(post);
+      await Get.find<PostPageController>().onRefresh();
       reset();
     });
   }

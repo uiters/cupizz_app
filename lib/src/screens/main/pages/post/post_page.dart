@@ -1,10 +1,9 @@
 library post_page;
 
 import 'package:cupizz_app/src/base/base.dart';
-import 'package:cupizz_app/src/screens/main/pages/post/components/post_page.controller.dart';
 import 'package:flutter/material.dart' hide Router;
 
-import 'components/post_page.model.dart';
+import 'post_page.controller.dart';
 
 class PostPage extends StatefulWidget {
   @override
@@ -17,55 +16,59 @@ class _PostPageState extends State<PostPage>
   bool get wantKeepAlive => true;
 
   @override
+  void initState() {
+    super.initState();
+    Get.put(PostPageController());
+  }
+
+  @override
   void onLoadMore() {
-    Momentum.controller<PostPageController>(context).loadMore();
+    Get.find<PostPageController>().loadMore();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final controller = Get.find<PostPageController>();
     return PrimaryScaffold(
       body: SafeArea(
-        child: MomentumBuilder(
-            controllers: [PostPageController],
-            builder: (context, snapshot) {
-              final model = snapshot<PostPageModel>()!;
-              return RefreshIndicator(
-                onRefresh: model.controller.refresh,
-                child: CustomScrollView(
-                  controller: scrollController,
-                  slivers: [
-                    SliverAppBar(
-                      title: _SearchBox(),
-                      floating: true,
-                      backgroundColor: context.colorScheme.background,
-                      bottom: PreferredSize(
-                        preferredSize: Size.fromHeight(50),
-                        child: ListCategories(),
+        child: RefreshIndicator(
+          onRefresh: controller.onRefresh,
+          child: Obx(
+            () => CustomScrollView(
+              controller: scrollController,
+              slivers: [
+                SliverAppBar(
+                  title: _SearchBox(),
+                  floating: true,
+                  backgroundColor: context.colorScheme.background,
+                  bottom: PreferredSize(
+                    preferredSize: Size.fromHeight(50),
+                    child: ListCategories(),
+                  ),
+                ),
+                if (controller.isLoading)
+                  SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                    (context, index) => PostCard(),
+                    childCount: 3,
+                  ))
+                else
+                  SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                    (context, index) => FadeIn(
+                      delay: (100 * (index + 1)).milliseconds,
+                      child: PostCard(
+                        post: controller.posts.getAt(index),
                       ),
                     ),
-                    if (model.isLoading)
-                      SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                        (context, index) => PostCard(),
-                        childCount: 3,
-                      ))
-                    else
-                      SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                        (context, index) => FadeIn(
-                          delay: (100 * (index + 1)).milliseconds,
-                          child: PostCard(
-                            post: model.posts!.getAt(index),
-                          ),
-                        ),
-                        childCount: (model.posts?.length ?? 0) +
-                            (!(model.isLastPage ?? false) ? 1 : 0),
-                      ))
-                  ],
-                ),
-              );
-            }),
+                    childCount: controller.posts.length +
+                        (!controller.isLastPage ? 1 : 0),
+                  ))
+              ],
+            ),
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: HeroKeys.createPost,
@@ -85,14 +88,14 @@ class _PostPageState extends State<PostPage>
 class _SearchBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = Momentum.controller<PostPageController>(context);
+    final controller = Get.find<PostPageController>();
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       elevation: 5,
       shadowColor: context.colorScheme.onBackground,
       color: context.colorScheme.background,
       child: TextFormField(
-        initialValue: controller.model!.keyword ?? '',
+        initialValue: controller.keyword ?? '',
         onChanged: controller.search,
         decoration: InputDecoration(
           hintText: 'Tìm kiếm confession',
@@ -131,13 +134,13 @@ class _SearchBox extends StatelessWidget {
 class ListCategories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<PostPageController>();
     return Container(
       width: MediaQuery.of(context).size.width,
       child: MomentumBuilder(
-          controllers: [SystemController, PostPageController],
+          controllers: [SystemController],
           builder: (context, snapshot) {
             final systemModel = snapshot<SystemModel>()!;
-            final model = snapshot<PostPageModel>()!;
             if (!systemModel.postCategories.isExistAndNotEmpty) {
               systemModel.controller.getPostCategories();
             }
@@ -145,23 +148,25 @@ class ListCategories extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               physics: BouncingScrollPhysics(),
-              child: Row(
-                children: <PostCategory>[
-                  PostCategory(value: 'Tất cả'),
-                  PostCategory(
-                    id: kIsMyPost,
-                    value: 'Của tôi',
-                    color: context.colorScheme.secondary,
-                  ),
-                  ...(systemModel.postCategories ?? [])
-                ]
-                    .mapIndexed(((e, i) => _buildItem(
-                        context,
-                        e,
-                        i,
-                        e.id == kIsMyPost && model.isMyPost! ||
-                            model.selectedCategory?.id == e.id)))
-                    .toList(),
+              child: Obx(
+                () => Row(
+                  children: <PostCategory>[
+                    PostCategory(value: 'Tất cả'),
+                    PostCategory(
+                      id: kIsMyPost,
+                      value: 'Của tôi',
+                      color: context.colorScheme.secondary,
+                    ),
+                    ...(systemModel.postCategories ?? [])
+                  ]
+                      .mapIndexed(((e, i) => _buildItem(
+                          context,
+                          e,
+                          i,
+                          e.id == kIsMyPost && controller.isMyPost ||
+                              controller.selectedCategory?.id == e.id)))
+                      .toList(),
+                ),
               ),
             );
           }),
@@ -183,8 +188,7 @@ class ListCategories extends StatelessWidget {
                 color: color.withOpacity(isSelected ? 0.2 : 0.0)),
             child: InkWell(
               onTap: () {
-                Momentum.controller<PostPageController>(context)
-                    .selectCategory(data);
+                Get.find<PostPageController>().selectCategory(data);
               },
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
